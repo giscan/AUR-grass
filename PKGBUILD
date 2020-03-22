@@ -12,7 +12,7 @@ url='http://grass.osgeo.org/'
 license=('GPL')
 depends=('blas' 'cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos' 'glibc' 'glu' 'lapack' 'libpng'
          'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python-gdal' 'python-matplotlib' 'python-numpy'
-         'python-pillow' 'python-wxpython' 'readline' 'unixodbc' 'subversion' 'wxgtk' 'wxpython' 'zstd' 'zlib')
+         'python-pillow' 'readline' 'unixodbc' 'subversion' 'wxgtk' 'wxpython' 'zstd' 'zlib')
 makedepends=('libxt')
 optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
