@@ -3,7 +3,7 @@
 #              Sylvain POULAIN <sylvain dot poulain at giscan dot com>
 
 pkgname=grass
-pkgver=7.6.1
+pkgver=7.8.2
 pkgrel=1
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
@@ -11,22 +11,13 @@ arch=('i686' 'x86_64')
 url='http://grass.osgeo.org/'
 license=('GPL')
 depends=('blas' 'cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos' 'glibc' 'glu' 'lapack' 'libpng'
-         'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python2-gdal' 'python2-matplotlib' 'python2-numpy'
-         'python2-pillow' 'readline' 'unixodbc' 'subversion' 'wxgtk' 'wxpython' 'zstd' 'zlib')
+         'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python-gdal' 'python-matplotlib' 'python-numpy'
+         'python-pillow' 'python-wxpython' 'readline' 'unixodbc' 'subversion' 'wxgtk' 'wxpython' 'zstd' 'zlib')
 makedepends=('libxt')
 optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
 source=("http://grass.osgeo.org/grass$_shortver/source/$pkgname-$pkgver.tar.gz")
-md5sums=('9ca74f9010d013f735737a90c65d8a7f')
-
-prepare() {
-  cd $pkgname-$pkgver
-
-  # Change everything to use python2
-  sed -i 's/\(env \|\/usr\/bin\/\)python$/&2/' $(find . -iname "*.py")
-  sed -i '/os\.environ.*GRASS_PYTHON/ s/"python"/"python2"/' lib/init/grass.py
-  sed -i '/^PYTHON/ s/python$/&2/' include/Make/Platform.make.in
-}
+md5sums=('352acc82e0651b1f44628c865c89ba82')
 
 build() {
   cd $pkgname-$pkgver
@@ -65,7 +56,7 @@ package() {
   cd "$pkgdir/opt/$pkgname"
 
   # Fix for 3rd party python scripts
-  ln -s ../../../usr/bin/python2 bin/python
+  # ln -s ../../../usr/bin/python2 bin/python
 
   # Put freedesktop.org files in correct location
   mv share "$pkgdir/usr"
