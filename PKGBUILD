@@ -2,22 +2,23 @@
 # Contributor: Maciej Sieczka <msieczka at sieczka dot org>
 #              Sylvain POULAIN <sylvain dot poulain at giscan dot com>
 
+
 pkgname=grass
-pkgver=7.8.2
+pkgver=7.8.4
 pkgrel=1
 _shortver=${pkgver%.*}; _shortver=${_shortver/./}
 pkgdesc='Geospatial data management and analysis, image processing, graphics/maps production, spatial modeling and visualization'
 arch=('i686' 'x86_64')
 url='http://grass.osgeo.org/'
 license=('GPL')
-depends=('blas' 'cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos' 'glibc' 'glu' 'lapack' 'libpng'
-         'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python-gdal' 'python-matplotlib' 'python-numpy'
-         'python-pillow' 'python-wxpython' 'readline' 'unixodbc' 'subversion' 'wxgtk' 'zstd' 'zlib')
+depends=('bzip2' 'cairo' 'fftw' 'fontconfig' 'freetype2' 'gcc-libs' 'gdal' 'geos' 'glibc' 'glu'
+         'libpng' 'libtiff' 'libx11' 'libgl' 'netcdf' 'pdal' 'proj' 'python-gdal' 'python-numpy'
+         'python-pillow' 'python-wxpython' 'readline' 'zlib' 'zstd')
 makedepends=('libxt')
 optdepends=('postgresql: PostgreSQL database interface'
             'sqlite: SQLite database interface')
 source=("http://grass.osgeo.org/grass$_shortver/source/$pkgname-$pkgver.tar.gz")
-md5sums=('352acc82e0651b1f44628c865c89ba82')
+md5sums=('2c90a74ebabb1d4410f70a9c551f53b7')
 
 build() {
   cd $pkgname-$pkgver
@@ -26,10 +27,7 @@ build() {
   CPP="gcc -E -w" \
   ./configure \
     --prefix=/opt/$pkgname \
-    --with-blas \
-    --with-bzlib \
     --with-freetype-includes=/usr/include/freetype2 \
-    --with-lapack \
     --with-wxwidgets \
     --with-readline \
     --with-pthread \
@@ -37,9 +35,9 @@ build() {
     --with-nls \
     --with-geos \
     --with-postgres \
-    --with-openmp \
-    --with-zstd \
-    --with-pdal
+    --with-pdal \
+    --with-bzlib \
+    --with-zstd
 
   make
 }
@@ -56,7 +54,7 @@ package() {
   cd "$pkgdir/opt/$pkgname"
 
   # Fix for 3rd party python scripts
-  # ln -s ../../../usr/bin/python2 bin/python
+  #ln -s ../../../usr/bin/python2 bin/python
 
   # Put freedesktop.org files in correct location
   mv share "$pkgdir/usr"
